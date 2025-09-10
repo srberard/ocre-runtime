@@ -21,8 +21,11 @@ jobs:
       
       - name: West setup
         run: |
+          df
+          ls -alr /
+          ls -alr /opt
           west init -l ./application
-          # west update  ## Not needed since we use are using the CI container that already has Zephyr
+          west update 
       - name: Build b_u585i_iot02a
         run: |
           west build --pristine -b b_u585i_iot02a ./application -d build -- -DMODULE_EXT_ROOT=$(pwd)/application
