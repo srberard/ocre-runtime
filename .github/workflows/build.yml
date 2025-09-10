@@ -1,12 +1,13 @@
 name: Build
 on:
+  workflow_dispatch:
   push:
     branches:
       - feature/enabled-codeql
-  workflow_dispatch:
+
 jobs:
   build-zephyr:
-    runs-on: zephyr-xlarge-runner
+    runs-on: ubuntu-latest
     container:
       image: ghcr.io/zephyrproject-rtos/ci:v0.28-branch
       options: --user root
