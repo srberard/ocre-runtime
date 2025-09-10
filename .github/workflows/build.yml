@@ -1,5 +1,8 @@
 name: Build
 on:
+  push:
+    branches:
+      - feature/enabled-codeql
   workflow_dispatch:
 jobs:
   build-zephyr:
