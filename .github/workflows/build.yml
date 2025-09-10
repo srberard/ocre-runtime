@@ -26,6 +26,7 @@ jobs:
         uses: zephyrproject-rtos/action-zephyr-setup@v1
         with:
           app-path: application
+          sdk-version: auto
  
       - name: Build b_u585i_iot02a
         run: |
