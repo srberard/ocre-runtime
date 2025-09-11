@@ -53,16 +53,13 @@ jobs:
           # Extract the packs
           unzip coding-standards-codeql-packs.zip
           ls -la
-          
-          # The extracted directory should contain the packs
-          find . -name "*.tar.gz" -type f
 
       # Initialize CodeQL
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
           languages: c
-          config-file: ./.github/codeql/codeql-config.yml
+          config-file: ./application/.github/codeql/codeql-config.yml
           queries: |
             security-and-quality
             codeql/c-coding-standards/misra-c-2023-default
