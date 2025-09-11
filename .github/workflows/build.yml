@@ -21,9 +21,7 @@ jobs:
       
       - name: West setup
         run: |
-          df
-          ls -alr /
-          ls -alr /opt
+          west config update.narrow true
           west init -l ./application
           west update 
       - name: Build b_u585i_iot02a
