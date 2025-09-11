@@ -21,9 +21,8 @@ jobs:
       
       - name: West setup
         run: |
-          west config update.narrow true
           west init -l ./application
-          west update 
+          west update --narrow
       - name: Build b_u585i_iot02a
         run: |
           west build --pristine -b b_u585i_iot02a ./application -d build -- -DMODULE_EXT_ROOT=$(pwd)/application
