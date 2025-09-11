@@ -60,10 +60,6 @@ jobs:
         with:
           languages: c
           config-file: ./application/.github/codeql/codeql-config.yml
-          queries: |
-            security-and-quality
-            codeql/c-coding-standards/misra-c-2023-default
-
 
       - name: Build b_u585i_iot02a
         run: |
