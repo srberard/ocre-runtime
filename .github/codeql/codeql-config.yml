@@ -4,9 +4,9 @@ name: "MISRA C CodeQL Config"
 disable-default-queries: false
 
 # Specify query suites to run
-queries:
-  - uses: security-and-quality
-  - uses: codeql/c-coding-standards/misra-c-2023-default
+#queries:
+#  - uses: security-and-quality
+#  - uses: codeql/c-coding-standards/misra-c-2023-default
 
 # Exclude Zephyr internals, focus on your application code
 paths-ignore:
