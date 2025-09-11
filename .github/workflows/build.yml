@@ -34,6 +34,35 @@ jobs:
           cd ./application
           git clean -f -d
           cd ..
+
+
+      # Download CodeQL Coding Standards
+      - name: Download CodeQL Coding Standards
+        run: |
+          gh release download -R github/codeql-coding-standards \
+            --pattern 'codeql-coding-standards-*.tar.gz' \
+            --output codeql-coding-standards.tar.gz
+          tar -xzf codeql-coding-standards.tar.gz
+          ls -la codeql-coding-standards/          
+
+      # Initialize CodeQL
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          config-file: ./.github/codeql/codeql-config.yml
+          tools: codeql-coding-standards.tar.gz
+          queries: |
+            security-and-quality
+            codeql-coding-standards/c/misra-c-2023/misra-c-2023.qls
+
       - name: Build b_u585i_iot02a
         run: |
           west build --pristine -b b_u585i_iot02a ./application -d build -- -DMODULE_EXT_ROOT=$(pwd)/application
+
+      # Perform CodeQL Analysis
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{matrix.language}}"
+          upload: true          
