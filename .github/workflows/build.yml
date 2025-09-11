@@ -31,7 +31,9 @@ jobs:
         run: |
           rm -rf ./application/.git/rebase-apply
           rm -rf ./application/.git/rebase-merge
-          git clean -f ./application
+          cd ./application
+          git clean -f -d
+          cd ..
       - name: Build b_u585i_iot02a
         run: |
           west build --pristine -b b_u585i_iot02a ./application -d build -- -DMODULE_EXT_ROOT=$(pwd)/application
