@@ -17,14 +17,21 @@ jobs:
         with:
           path: application
           submodules: recursive
-          fetch-depth: 0
+          fetch-depth: 1
       
       - name: West and Zephyr setup
         run: |
           west init -l ./application
           west config --global update.narrow true
-          west update --group-filter=-tests,-samples,-bablesim
+          west update --depth=1 --group-filter=-tests,-samples,-bablesim,-docs
           echo "ZEPHYR_SDK_INSTALL_DIR=/opt/toolchains/zephyr-sdk-$ZSDK_VERSION" >> $GITHUB_ENV
+          echo "`df -h`"          
+
+      - name: Clean up after checkout and west update
+        run: |
+          rm -rf ./application/.git/rebase-apply
+          rm -rf ./application/.git/rebase-merge
+          git clean -f -d
       - name: Build b_u585i_iot02a
         run: |
           west build --pristine -b b_u585i_iot02a ./application -d build -- -DMODULE_EXT_ROOT=$(pwd)/application
