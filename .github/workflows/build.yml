@@ -23,7 +23,7 @@ jobs:
         run: |
           west init -l ./application
           west config --global update.narrow true
-          west update --depth=1 --group-filter=-tests,-samples,-bablesim,-docs
+          west update -o=--depth=1 --group-filter=-tests,-samples,-bablesim,-docs
           echo "ZEPHYR_SDK_INSTALL_DIR=/opt/toolchains/zephyr-sdk-$ZSDK_VERSION" >> $GITHUB_ENV
           echo "`df -h`"          
 
