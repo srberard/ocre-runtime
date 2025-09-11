@@ -11,6 +11,12 @@ jobs:
     container:
       image: ghcr.io/zephyrproject-rtos/ci:v0.28-branch
       options: --user root
+
+
+    strategy:
+      matrix:
+        language: [ 'c' ]
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -35,15 +41,19 @@ jobs:
           git clean -f -d
           cd ..
 
-
       # Download CodeQL Coding Standards
       - name: Download CodeQL Coding Standards
         run: |
-          gh release download -R github/codeql-coding-standards \
-            --pattern 'codeql-coding-standards-*.tar.gz' \
-            --output codeql-coding-standards.tar.gz
-          tar -xzf codeql-coding-standards.tar.gz
-          ls -la codeql-coding-standards/          
+          # Download the latest coding standards packs
+          curl -L -o coding-standards-codeql-packs.zip \
+            "https://github.com/github/codeql-coding-standards/releases/download/v2.50.0/coding-standards-codeql-packs.zip"
+          
+          # Extract the packs
+          unzip coding-standards-codeql-packs.zip
+          ls -la
+          
+          # The extracted directory should contain the packs
+          find . -name "*.tar.gz" -type f
 
       # Initialize CodeQL
       - name: Initialize CodeQL
@@ -51,10 +61,11 @@ jobs:
         with:
           languages: ${{ matrix.language }}
           config-file: ./.github/codeql/codeql-config.yml
-          tools: codeql-coding-standards.tar.gz
+          tools: coding-standards-codeql-packs.zip
           queries: |
             security-and-quality
-            codeql-coding-standards/c/misra-c-2023/misra-c-2023.qls
+            codeql/c-coding-standards/misra-c-2023-default
+
 
       - name: Build b_u585i_iot02a
         run: |
