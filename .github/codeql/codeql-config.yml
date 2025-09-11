@@ -1,0 +1,28 @@
+name: "MISRA C CodeQL Config"
+
+# Keep default security queries along with MISRA
+disable-default-queries: false
+
+# Specify query suites to run
+queries:
+  - uses: security-and-quality
+  - uses: codeql/c-coding-standards/misra-c-2023-default
+
+# Exclude Zephyr internals, focus on your application code
+paths-ignore:
+  - build/              # Build artifacts
+  - zephyr/             # Zephyr RTOS source code
+  - modules/            # External modules
+  - bootloader/         # Bootloader code
+  - "**/*.generated.c"  # Generated source files
+  - "**/*.pb.c"         # Protocol buffer files
+  - "**/.west/"         # West workspace files
+
+# Include your application source code
+paths:
+  - src/
+  - lib/
+  - include/
+  - app/
+  - drivers/    # Include if you have custom drivers
+  - subsys/     # Include if you have custom subsystems

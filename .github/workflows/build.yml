@@ -12,11 +12,6 @@ jobs:
       image: ghcr.io/zephyrproject-rtos/ci:v0.28-branch
       options: --user root
 
-
-    strategy:
-      matrix:
-        language: [ 'c' ]
-
     steps:
       # Install system dependencies
       - name: Install system dependencies
@@ -24,7 +19,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y \
             curl unzip 
-            
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -66,9 +61,8 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
-          languages: ${{ matrix.language }}
+          languages: c
           config-file: ./.github/codeql/codeql-config.yml
-          tools: coding-standards-codeql-packs.zip
           queries: |
             security-and-quality
             codeql/c-coding-standards/misra-c-2023-default
