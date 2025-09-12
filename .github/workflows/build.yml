@@ -49,6 +49,7 @@ jobs:
           west zephyr-export
           west packages pip --install
           west sdk install
+          echo tree $GITHUB_WORKSPACE
 
       # Download CodeQL Coding Standards
       - name: Download CodeQL Coding Standards
