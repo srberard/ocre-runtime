@@ -13,6 +13,11 @@ jobs:
     #   options: --user root
 
     steps:
+      - name: Build info
+        run: |
+          echo "Workspace: $GITHUB_WORKSPACE"
+          echo tree $GITHUB_WORKSPACE
+
       # Install system dependencies
       - name: Install system dependencies
         run: |
