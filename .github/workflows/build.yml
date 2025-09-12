@@ -62,6 +62,7 @@ jobs:
         with:
           languages: c
           config-file: ./application/.github/codeql/codeql-config.yml
+          source-root: ./application          
 
       - name: Build b_u585i_iot02a
         run: |
@@ -71,5 +72,12 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
         with:
-          category: "/language:${{matrix.language}}"
+          category: "/language:c"
           upload: true          
+
+      - name: Upload CodeQL SARIF artifacts
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: codeql-results
+          path: /home/runner/work/_temp/codeql_databases/*.sarif
