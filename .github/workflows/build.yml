@@ -25,6 +25,7 @@ jobs:
         run: |
           python3 -m venv ~/zephyr-venv
           source ~/zephyr-venv/bin/activate
+          echo "PATH=$PATH" >> $GITHUB_ENV
           pip install west
 
       - name: Checkout
