@@ -76,8 +76,7 @@ jobs:
           upload: true          
 
       - name: Upload CodeQL SARIF artifacts
-        if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: codeql-results
           path: /home/runner/work/_temp/codeql_databases/*.sarif
